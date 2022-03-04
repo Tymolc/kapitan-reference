@@ -231,6 +231,10 @@ class ComponentConfig(ConfigMap, SharedConfig):
         self.add_directory(self.config.directory, encode=False)
         self.versioning(self.config.get('versioned', False))
 
+        for key, spec in self.config.binary_data.items():
+            if "value" in spec:
+                self.root.binaryData[key] = spec.get('value')
+
 
 class Secret(k8s.Base):
     def new(self):
